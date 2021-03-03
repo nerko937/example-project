@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import datetime
 from pathlib import Path
 import os
 
@@ -39,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'dj_rest_auth',
+
     'users',
 ]
 
@@ -125,3 +128,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    )
+}
+
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'auth'
+JWT_AUTH_REFRESH_COOKIE = 'refresh-token'
+
+ACCESS_TOKEN_LIFETIME = datetime.timedelta(minutes=30)
+REFRESH_TOKEN_LIFETIME = datetime.timedelta(days=365)
