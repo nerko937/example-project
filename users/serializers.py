@@ -20,8 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password'])
         user.save()
-        a = Activation.objects.create(user=user)
-        print(a.unique_id)
+        Activation.objects.create(user=user)
         return user
 
     class Meta:
