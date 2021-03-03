@@ -136,8 +136,7 @@ REST_FRAMEWORK = {
 }
 
 REST_USE_JWT = True
-JWT_AUTH_COOKIE = 'auth'
-JWT_AUTH_REFRESH_COOKIE = 'refresh-token'
 
+AUTH_HEADER_TYPES = ('Bearer', 'JWT')
 ACCESS_TOKEN_LIFETIME = datetime.timedelta(minutes=30)
 REFRESH_TOKEN_LIFETIME = datetime.timedelta(days=365)
