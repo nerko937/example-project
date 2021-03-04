@@ -4,6 +4,6 @@ from .views import UserRegisterView, activate
 
 
 urlpatterns = [
-    path('register/', UserRegisterView.as_view()),
-    path('activate/<uuid:unique_id>/', activate),
+    path('register/', UserRegisterView.as_view(), name='register'),
+    path('activate/<uuid:unique_id>/', activate, name='activate'),
 ]
