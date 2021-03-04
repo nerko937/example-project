@@ -6,10 +6,15 @@ from rest_framework import status
 
 from .models import Activation
 from .serializers import UserSerializer
+from .utils import send_activation_email
 
 
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserSerializer
+
+    def perform_create(self, serializer):
+        user = serializer.save()
+        send_activation_email(user, self.request)
 
 
 @api_view(['GET'])
