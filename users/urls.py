@@ -16,7 +16,6 @@ from .views import (
 urlpatterns = [
     # registration
     path('register/', UserRegisterView.as_view(), name='register'),
-    path('activate/<uuid:unique_id>/', activate, name='activate'),
     path('activate/<uuid:activation_id>/', activate, name='activate'),
     # google
     path('google/login/', GoogleLogin.as_view(), name='google_login'),
