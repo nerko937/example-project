@@ -129,6 +129,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+AUTH_USER_MODEL = 'users.User'
+
 EMAIL_HOST = os.environ['EMAIL_HOST']
 EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']

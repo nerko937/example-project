@@ -1,28 +1,21 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
-
-from .models import Activation
 
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(max_length=128, write_only=True)
 
     def validate_password(self, value):
-        if len(value) < 8:
-            raise serializers.ValidationError("Password is too short (min. 8 characters).")
+        validate_password(value)
         return value
 
     def create(self, validated_data):
-        user = User(
-            email=validated_data['email'],
-            username=validated_data['email'].split('@')[0],
-            is_active=False,
+        user = get_user_model().objects.create_user(
+            validated_data['email'], validated_data['password']
         )
-        user.set_password(validated_data['password'])
-        user.save()
-        Activation.objects.create(user=user)
         return user
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ('email', 'password')
