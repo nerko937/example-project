@@ -7,6 +7,8 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env
+    ports:
+      - "6543:5432"
   backend:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
