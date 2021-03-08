@@ -17,7 +17,6 @@ class UserManager(BaseUserManager):
 
         user = self.model(email=self.normalize_email(email))
         user.set_password(password)
-        user.is_active = False
         user.save(using=self._db)
         return user
 
@@ -33,7 +32,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     email = models.EmailField(_('email address'), unique=True)
-    is_active = models.BooleanField(_('active'), default=True)
+    is_active = models.BooleanField(_('active'), default=False)
     is_staff = models.BooleanField(_('staff status'), default=False)
     activation_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 

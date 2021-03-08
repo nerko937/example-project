@@ -159,6 +159,7 @@ REST_AUTH_SERIALIZERS = {
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'VERIFIED_EMAIL': True,
         'SCOPE': [
             'profile',
             'email',
@@ -166,10 +167,14 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'access_type': 'online',
         }
+    },
+    'github': {
+        'VERIFIED_EMAIL': True,
     }
 }
 SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
 SOCIALACCOUNT_EMAIL_REQUIRED = False
+SOCIALACCOUNT_ADAPTER = 'users.adapter.CustomSocialAccountAdapter'
 
 FRONTEND_URL = os.environ['FRONTEND_URL']
 
