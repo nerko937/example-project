@@ -40,7 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'dj_rest_auth.registration',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
 
     'users',
 ]
@@ -137,6 +145,38 @@ EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 EMAIL_PORT = os.environ['EMAIL_PORT']
 EMAIL_USE_TLS = os.environ['EMAIL_USE_TLS']
 MAIL_INFO = os.environ['MAIL_INFO']
+
+SITE_ID = 1
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer'
+}
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'VERIFIED_EMAIL': True,
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    },
+    'github': {
+        'VERIFIED_EMAIL': True,
+    }
+}
+SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
+SOCIALACCOUNT_EMAIL_REQUIRED = False
+SOCIALACCOUNT_ADAPTER = 'users.adapter.CustomSocialAccountAdapter'
+
+FRONTEND_URL = os.environ['FRONTEND_URL']
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
