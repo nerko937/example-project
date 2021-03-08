@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
 
     'users',
+    'projects',
 ]
 
 MIDDLEWARE = [
@@ -180,6 +181,7 @@ FRONTEND_URL = os.environ['FRONTEND_URL']
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     )
 }
