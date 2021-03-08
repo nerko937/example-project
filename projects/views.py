@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import viewsets
 
 from .models import Project
@@ -11,5 +12,5 @@ class ProjectViewSet(viewsets.ModelViewSet):
     http_method_names = ('head', 'get', 'post', 'put', 'patch')
 
     def get_queryset(self):
-        return Project.objects.filter(users=self.request.user)
+        return Project.objects.filter(Q(users=self.request.user) | Q(owner=self.request.user))
 
