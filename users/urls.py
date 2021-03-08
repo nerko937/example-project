@@ -25,6 +25,4 @@ urlpatterns = [
     path('github/login/', GithubLogin.as_view(), name='github_login'),
     path('github/callback/', github_callback, name='github_callback'),
     path('github/url/', github_oauth2_login, name='github_url'),
-    # misc
-    path('account-inavtive/', account_inactive, name='account_inactive'),
 ]
