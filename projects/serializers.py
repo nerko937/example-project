@@ -5,7 +5,7 @@ from .models import Project, Issue
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = '__all__'
+        fields = ('name', 'owner', 'creation_date', 'users')
         model = Project
 
 

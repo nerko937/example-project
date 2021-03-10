@@ -1,24 +1,25 @@
-from django.urls import reverse
-from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
-from django.shortcuts import redirect
-from django.db import transaction
-from django.conf import settings
-from rest_framework import generics
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-from dj_rest_auth.registration.views import SocialLoginView, SocialConnectView
+from dj_rest_auth.registration.views import SocialLoginView
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.db import transaction
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
+from rest_framework import generics, status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
+from .permissions import CanCreateOrIsAuthenticated
 from .serializers import UserSerializer
 from .utils import send_activation_email, get_callback_redirect
 
 
-class UserRegisterView(generics.CreateAPIView):
+class UserListCreate(generics.CreateAPIView):
     serializer_class = UserSerializer
+    queryset = get_user_model().objects.all()
+    permission_classes = (CanCreateOrIsAuthenticated,)
 
     @transaction.atomic
     def perform_create(self, serializer):
