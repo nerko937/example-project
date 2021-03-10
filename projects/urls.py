@@ -7,7 +7,7 @@ from .views import ProjectViewSet, IssueCreate, IssueRetrieveUpdate, IssueListFo
 router = routers.DefaultRouter()
 router.register(r'projects', ProjectViewSet, basename='projects')
 urlpatterns = [
+    path('projects/<int:project_id>/issues/', IssueListForProject.as_view()),
     path('issues/', IssueCreate.as_view()),
     path('issues/<int:pk>/', IssueRetrieveUpdate.as_view()),
-    path('issues-for-project/<int:project_id>/', IssueListForProject.as_view()),
 ] + router.urls

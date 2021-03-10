@@ -18,8 +18,8 @@ class Project(models.Model):
 
 class Issue(models.Model):
     TODO = 'TODO'
-    IN_PROGRESS = 'IP'
-    REVIEW = 'REV'
+    IN_PROGRESS = 'INPROG'
+    REVIEW = 'REVIEW'
     DONE = 'DONE'
     STATUS_CHOICES = (
         (TODO, 'Todo'),
