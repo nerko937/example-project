@@ -3,20 +3,19 @@ from allauth.socialaccount.providers.github.views import oauth2_login as github_
 from allauth.socialaccount.providers.google.views import oauth2_login as google_oauth2_login
 
 from .views import (
-    UserRegisterView,
+    UserListCreate,
     activate,
     GoogleLogin,
     google_callback,
     GithubLogin,
     github_callback,
-    account_inactive,
 )
 
 
 urlpatterns = [
     # registration
-    path('register/', UserRegisterView.as_view(), name='register'),
-    path('activate/<uuid:activation_id>/', activate, name='activate'),
+    path('users/', UserListCreate.as_view(), name='users'),
+    path('users/activate/<uuid:activation_id>/', activate, name='activate'),
     # google
     path('google/login/', GoogleLogin.as_view(), name='google_login'),
     path('google/callback/', google_callback, name='google_callback'),

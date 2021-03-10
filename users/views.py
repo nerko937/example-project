@@ -14,11 +14,14 @@ from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView, SocialConnectView
 
 from .serializers import UserSerializer
+from .permissions import CanCreateOrIsAuthenticated
 from .utils import send_activation_email, get_callback_redirect
 
 
-class UserRegisterView(generics.CreateAPIView):
+class UserListCreate(generics.CreateAPIView):
     serializer_class = UserSerializer
+    queryset = get_user_model().objects.all()
+    permission_classes = (CanCreateOrIsAuthenticated,)
 
     @transaction.atomic
     def perform_create(self, serializer):
