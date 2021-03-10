@@ -1,11 +1,11 @@
 import urllib.parse
 
-from django.core.mail import send_mail
-from django.contrib.auth.models import User
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.shortcuts import redirect
-from rest_framework.reverse import reverse
 from rest_framework.request import Request
+from rest_framework.reverse import reverse
 
 
 def send_activation_email(user: User, request: Request) -> None:

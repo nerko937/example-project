@@ -1,6 +1,7 @@
-from django.urls import path
 from allauth.socialaccount.providers.github.views import oauth2_login as github_oauth2_login
 from allauth.socialaccount.providers.google.views import oauth2_login as google_oauth2_login
+from django.urls import path
+
 
 from .views import (
     UserListCreate,
