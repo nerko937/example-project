@@ -25,3 +25,8 @@ def email_if_assignee_changed(issue):
             [issue.owner, issue.assignee],
             fail_silently=False,
         )
+
+
+def issue_directory_path(instance, filename):
+    """for FileField upload_to"""
+    return f'attachments/issue_{instance.issue_id}/{filename}'

@@ -9,3 +9,11 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
         # model must have owner field
         return obj.owner == request.user
+
+
+class IsIssueOwner(permissions.BasePermission):
+    message = 'Only issue owners are allowed to delete.'
+
+    def has_object_permission(self, request, view, obj):
+        # model must have issue fk with owner field
+        return obj.issue.owner == request.user
