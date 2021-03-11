@@ -1,5 +1,8 @@
+from bleach import Cleaner
+from bleach.linkifier import LinkifyFilter
 from django.conf import settings
 from django.core.mail import send_mail
+import markdown
 
 
 def email_due_date_passed(issue):
@@ -25,3 +28,27 @@ def email_if_assignee_changed(issue):
             [issue.owner, issue.assignee],
             fail_silently=False,
         )
+
+
+def md_to_html(md):
+    """Converts md to html and sanitizes it"""
+    html = markdown.markdown(md)
+    cleaner = Cleaner(
+        tags=[
+            "h1", "h2", "h3", "h4", "h5", "h6",
+            "b", "i", "strong", "em", "tt", "del", "abbr",
+            "p", "br",
+            "span", "div", "blockquote", "code", "pre", "hr",
+            "ul", "dl", "ol", "li", "dd", "dt",
+            "img",
+            "a",
+            "sub", "sup",
+        ],
+        attributes={
+            "img": ["src", "alt", "title"],
+            "a": ["href", "alt", "title"],
+            "abbr": ["title"],
+        },
+        filters=[LinkifyFilter],
+    )
+    return cleaner.clean(html)
