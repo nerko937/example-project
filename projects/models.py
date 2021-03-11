@@ -3,7 +3,7 @@ from django.db import models
 from model_utils import FieldTracker
 
 from example_project.celery import app
-from .utils import email_if_assignee_changed
+from .utils import email_if_assignee_changed, md_to_html
 
 
 class Project(models.Model):
@@ -29,7 +29,7 @@ class Issue(models.Model):
     )
 
     title = models.CharField(max_length=256, unique=True)
-    description = models.TextField(null=True, blank=True)
+    description_md = models.TextField(blank=True, default='')
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
     due_date = models.DateTimeField()
@@ -41,6 +41,10 @@ class Issue(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def description_html(self):
+        return md_to_html(self.description_md)
 
     def notify_when_due_date_passed(self):
         from .tasks import email_when_due_date_passed
