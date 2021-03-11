@@ -11,7 +11,6 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 class IssueSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(default=serializers.CurrentUserDefault(), read_only=True)
-    # description_html = serializers.ReadOnlyField()
 
     class Meta:
         fields = (
