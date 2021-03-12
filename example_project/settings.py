@@ -131,6 +131,9 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'users.User'
 
+MEDIA_ROOT = os.environ['MEDIA_ROOT']
+MEDIA_URL = os.environ['MEDIA_URL']
+
 EMAIL_HOST = os.environ['EMAIL_HOST']
 EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']

@@ -30,6 +30,11 @@ def email_if_assignee_changed(issue):
         )
 
 
+def issue_directory_path(instance, filename):
+    """for FileField upload_to"""
+    return f'attachments/issue_{instance.issue_id}/{filename}'
+
+
 def md_to_html(md):
     """Converts md to html and sanitizes it"""
     html = markdown.markdown(md)

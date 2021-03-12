@@ -1,9 +1,10 @@
 from django.contrib.auth import get_user_model
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from model_utils import FieldTracker
 
 from example_project.celery import app
-from .utils import email_if_assignee_changed, md_to_html
+from .utils import email_if_assignee_changed, issue_directory_path, md_to_html
 
 
 class Project(models.Model):
@@ -63,3 +64,15 @@ class Issue(models.Model):
         elif due_date_changed:
             app.control.revoke(self.task_id, terminate=True)
             self.notify_when_due_date_passed()
+
+
+class Attachment(models.Model):
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name='attachments')
+    file = models.FileField(
+        upload_to=issue_directory_path,
+        validators=[FileExtensionValidator(allowed_extensions=('txt', 'pdf', 'xml', 'doc', 'jpg', 'png'))],
+    )
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'issue_{self.id} {self.file.name}'
